@@ -26,7 +26,7 @@ public class Output {
         System.out.println("\n당첨 통계");
         System.out.println("---------");
         lottoResultDto.getLottoResult().entrySet().stream()
-                .sorted(Comparator.comparingInt(o -> o.getKey().getPrize()))
+                .sorted(Comparator.comparingLong(o -> o.getKey().getPrize()))
                 .forEach(entry -> printLottoRank(entry.getKey(), entry.getValue()));
         System.out.println("총 수익률은 " + lottoResultDto.getReturnRate() + "입니다.");
     }

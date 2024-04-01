@@ -13,9 +13,9 @@ public class Input {
     private Input() {
     }
 
-    public static Long getPurchaseAmount() {
+    public static long getPurchaseAmount() {
         System.out.println("구입금액을 입력해 주세요.");
-        return Long.parseLong(SCANNER.nextLine());
+        return Integer.parseInt(SCANNER.nextLine());
     }
 
     public static int getManualPurchaseCount() {
@@ -23,29 +23,22 @@ public class Input {
         return Integer.parseInt(SCANNER.nextLine());
     }
 
-    public static List<LottoTicket> getManualLottoTickets(int count) {
+    public static List<String> getManualLottoTickets(int count) {
         if (count == 0) {
             return Collections.emptyList();
         }
 
         System.out.println("수동으로 구매할 번호를 입력해 주세요.");
-        List<LottoTicket> manualLottoTickets = new ArrayList<>();
+        List<String> manualLottoTickets = new ArrayList<>();
         for (int i = 0; i < count; i++) {
-            manualLottoTickets.add(parseLottoTicket(SCANNER.nextLine()));
+            manualLottoTickets.add(SCANNER.nextLine());
         }
         return manualLottoTickets;
     }
 
-    public static LottoTicket getWinningTicket() {
+    public static String getWinningTicket() {
         System.out.println("지난 주 당첨 번호를 입력해 주세요.");
-        return parseLottoTicket(SCANNER.nextLine());
-    }
-
-    private static LottoTicket parseLottoTicket(String lottoTicket) {
-        return Arrays.stream(lottoTicket.split(", "))
-                .map(Integer::parseInt)
-                .map(LottoNumber::new)
-                .collect(Collectors.collectingAndThen(Collectors.toList(), LottoTicket::new));
+        return SCANNER.nextLine();
     }
 
     public static int getBonusNumber() {

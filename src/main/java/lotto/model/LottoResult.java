@@ -12,14 +12,14 @@ public class LottoResult {
         this.lottoRanks = lottoRanks;
     }
 
+    public float calculateReturnRate(PurchaseAmount totalPurchaseAmount) {
+        return (float) calculateTotalPrize() / totalPurchaseAmount.getPurchaseAmount();
+    }
+
     private long calculateTotalPrize() {
         return lottoRanks.stream()
                 .mapToLong(LottoRank::getPrize)
                 .sum();
-    }
-
-    public float calculateReturnRate(PurchaseAmount totalPurchaseAmount) {
-        return (float) calculateTotalPrize() / totalPurchaseAmount.getPurchaseAmount();
     }
 
     public Map<LottoRank, Integer> makeLottoResultMap() {

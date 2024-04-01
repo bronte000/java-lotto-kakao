@@ -56,6 +56,24 @@ public class LottoTicketsTest {
         assertThat(lottoTickets.getLottoTickets()).containsAll(additionalLottoTickets);
     }
 
+    @Test
+    void 로또티켓들과_로또티켓들_사이에도_add함수를_쓸수있다() {
+        LottoTickets lottoTickets = new LottoTickets(List.of(
+                createLottoTicket(1, 2, 3, 4, 5, 6),
+                createLottoTicket(1, 2, 3, 4, 5, 7)
+        ));
+        LottoTickets additionalLottoTickets = new LottoTickets(List.of(
+                createLottoTicket(1, 2, 3, 4, 5, 8),
+                createLottoTicket(1, 2, 3, 4, 5, 9)
+        ));
+
+        int totalCount = lottoTickets.getSize() + additionalLottoTickets.getSize();
+        lottoTickets.add(additionalLottoTickets);
+
+        assertThat(lottoTickets.getSize()).isEqualTo(totalCount);
+        assertThat(lottoTickets.getLottoTickets()).containsAll(additionalLottoTickets.getLottoTickets());
+    }
+
     private LottoTicket createLottoTicket(int... numbers) {
         return Arrays.stream(numbers)
                 .mapToObj(LottoNumber::new)

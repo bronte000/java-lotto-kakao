@@ -34,7 +34,7 @@ public class LottoResultTest {
                 LottoRank.SECOND
         );
         LottoResult result = new LottoResult(ranks);
-        assertThat(result.calculateReturnRate(new PurchaseAmount(10_000L))).isEqualTo(403_000L);
+        assertThat(result.calculateReturnRate(new PurchaseAmount(10_000))).isEqualTo(403_000);
     }
 
     @Test

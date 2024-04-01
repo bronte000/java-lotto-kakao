@@ -3,20 +3,20 @@ package lotto.model;
 import java.util.Objects;
 
 public class PurchaseAmount {
-    private Long amount;
+    private long amount;
 
-    public PurchaseAmount(Long amount) {
+    public PurchaseAmount(long amount) {
         validate(amount);
         this.amount = amount;
     }
 
-    private void validate(Long amount) {
+    private void validate(long amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("구매 금액은 0이하가 될 수 없습니다.");
         }
     }
 
-    public void decrease(long spentAmount) {
+    public void spend(long spentAmount) {
         amount -= spentAmount;
     }
 
