@@ -1,28 +1,23 @@
 package lotto;
 
-import lotto.model.*;
+import lotto.model.LottoResult;
+import lotto.model.LottoTickets;
+import lotto.model.LottoWinningNumbers;
+import lotto.model.PurchaseAmount;
 import lotto.model.dto.LottoResultDto;
+import lotto.model.dto.LottoTicketDto;
 import lotto.view.Input;
 import lotto.view.Output;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
-import lotto.model.dto.LottoTicketDto;
 
 public class Main {
+
     public static void main(String[] args) {
-        PurchaseAmount amount = new PurchaseAmount(Input.getPurchaseAmount());
-        int count = (int) amount.getPurchaseAmount() / 1000;
-        Output.printPurchaseAmount(count);
+        PurchaseAmount purchaseAmount = new PurchaseAmount(Input.getPurchaseAmount());
+        LottoTickets lottoTickets = LottoController.buyLottoTickets(purchaseAmount);
 
-
-        List<LottoTicket> lottoTicketList = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            lottoTicketList.add(LottoTicketGenerator.generate());
-        }
-        LottoTickets lottoTickets = new LottoTickets(lottoTicketList);
-
+        Output.printPurchaseCount(lottoTickets.getSize());
         Output.printLottoTickets(lottoTickets.getLottoTickets()
                 .stream()
                 .map(LottoTicketDto::new)

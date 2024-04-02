@@ -3,7 +3,6 @@ package lotto.model.dto;
 import lotto.model.LottoRank;
 import lotto.model.LottoResult;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,17 +20,12 @@ public class LottoResultDto {
         this.returnRate = lottoResult.calculateReturnRate();
         Map<LottoRank, Integer> lottoResultMap = new HashMap<>();
         for (LottoRank lottoRank : LottoRank.values()) {
-            if (lottoRank == LottoRank.NONE) {
-                continue;
-            }
             lottoResultMap.put(lottoRank, 0);
         }
         for (LottoRank lottoRank : lottoResult.getLottoRanks()) {
-            if (lottoRank == LottoRank.NONE) {
-                continue;
-            }
             lottoResultMap.put(lottoRank, lottoResultMap.get(lottoRank) + 1);
         }
+        lottoResultMap.remove(LottoRank.NONE);
         this.lottoResult = lottoResultMap;
     }
 
