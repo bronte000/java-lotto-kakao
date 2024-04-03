@@ -17,7 +17,10 @@ public class LottoResultDto {
     }
 
     public LottoResultDto(LottoResult lottoResult) {
-        this.returnRate = lottoResult.calculateReturnRate();
+        this(lottoResult.calculateReturnRate(), makeLottoResultMap(lottoResult));
+    }
+
+    private static Map<LottoRank, Integer> makeLottoResultMap(LottoResult lottoResult) {
         Map<LottoRank, Integer> lottoResultMap = new HashMap<>();
         for (LottoRank lottoRank : LottoRank.values()) {
             lottoResultMap.put(lottoRank, 0);
@@ -26,7 +29,7 @@ public class LottoResultDto {
             lottoResultMap.put(lottoRank, lottoResultMap.get(lottoRank) + 1);
         }
         lottoResultMap.remove(LottoRank.NONE);
-        this.lottoResult = lottoResultMap;
+        return lottoResultMap;
     }
 
     public float getReturnRate() {
