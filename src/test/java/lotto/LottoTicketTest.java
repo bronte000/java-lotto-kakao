@@ -3,12 +3,11 @@ package lotto;
 import lotto.model.LottoNumber;
 import lotto.model.LottoRank;
 import lotto.model.LottoTicket;
-import lotto.model.LottoWinningNumbers;
+import lotto.model.WinningLottoTicket;
 import org.junit.jupiter.api.Test;
 
-import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -62,9 +61,7 @@ public class LottoTicketTest {
         );
         LottoTicket lottoTicket = new LottoTicket(lottoNumbers);
 
-        assertThat(lottoTicket.getLottoNumbers()).isEqualTo(lottoNumbers.stream()
-                .sorted(Comparator.comparing(LottoNumber::getNumber))
-                .collect(Collectors.toList()));
+        assertThat(lottoTicket.getLottoNumbers()).isEqualTo(new HashSet<>(lottoNumbers));
     }
 
     @Test
@@ -78,7 +75,7 @@ public class LottoTicketTest {
                 new LottoNumber(6)
         ));
 
-        LottoWinningNumbers lottoWinningNumbers = new LottoWinningNumbers(List.of(
+        WinningLottoTicket winningLottoTicket = new WinningLottoTicket(List.of(
                 new LottoNumber(1),
                 new LottoNumber(2),
                 new LottoNumber(3),
@@ -87,6 +84,6 @@ public class LottoTicketTest {
                 new LottoNumber(9)
         ), new LottoNumber(6));
 
-        assertThat(lottoTicket.match(lottoWinningNumbers)).isEqualTo(LottoRank.SECOND);
+        assertThat(winningLottoTicket.match(lottoTicket)).isEqualTo(LottoRank.SECOND);
     }
 }

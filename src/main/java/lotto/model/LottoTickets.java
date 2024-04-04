@@ -1,6 +1,5 @@
 package lotto.model;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,16 +12,16 @@ public class LottoTickets {
         this.lottoTickets = lottoTickets;
     }
 
-    public int getSize() {
-        return lottoTickets.size();
-    }
-
-    public LottoResult getWinningResult(LottoWinningNumbers winningNumbers) {
+    public LottoResult getWinningResult(WinningLottoTicket winningTicket) {
         List<LottoRank> lottoRanks = lottoTickets.stream()
-                .map(lottoTicket -> lottoTicket.match(winningNumbers))
+                .map(winningTicket::match)
                 .collect(Collectors.toList());
 
-        return new LottoResult(lottoRanks, new PurchaseAmount(this.getSize() * LottoTicket.PRICE));
+        return new LottoResult(lottoRanks, new PurchaseAmount(lottoTickets.size() * LottoTicket.PRICE));
+    }
+
+    public int getSize() {
+        return lottoTickets.size();
     }
 
     public List<LottoTicket> getLottoTickets() {

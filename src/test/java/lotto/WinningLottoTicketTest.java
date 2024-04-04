@@ -1,7 +1,7 @@
 package lotto;
 
 import lotto.model.LottoNumber;
-import lotto.model.LottoWinningNumbers;
+import lotto.model.WinningLottoTicket;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +9,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class LottoWinningNumbersTest {
+public class WinningLottoTicketTest {
     @Test
     void 여섯개의_로또_번호와_하나의_보너스_번호를_받아_생성한다() {
         List<LottoNumber> lottoNumbers = List.of(
@@ -22,7 +22,7 @@ public class LottoWinningNumbersTest {
         );
         LottoNumber bonusNumber = new LottoNumber(20);
 
-        Assertions.assertDoesNotThrow(() -> new LottoWinningNumbers(lottoNumbers, bonusNumber));
+        Assertions.assertDoesNotThrow(() -> new WinningLottoTicket(lottoNumbers, bonusNumber));
     }
 
 
@@ -36,7 +36,7 @@ public class LottoWinningNumbersTest {
         );
         LottoNumber bonusNumber = new LottoNumber(20);
 
-        assertThatThrownBy(() -> new LottoWinningNumbers(lottoNumbers, bonusNumber))
+        assertThatThrownBy(() -> new WinningLottoTicket(lottoNumbers, bonusNumber))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -53,7 +53,7 @@ public class LottoWinningNumbersTest {
         );
         LottoNumber bonusNumber = new LottoNumber(20);
 
-        assertThatThrownBy(() -> new LottoWinningNumbers(lottoNumbers, bonusNumber))
+        assertThatThrownBy(() -> new WinningLottoTicket(lottoNumbers, bonusNumber))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -69,7 +69,7 @@ public class LottoWinningNumbersTest {
         );
         LottoNumber bonusNumber = new LottoNumber(10);
 
-        assertThatThrownBy(() -> new LottoWinningNumbers(lottoNumbers, bonusNumber))
+        assertThatThrownBy(() -> new WinningLottoTicket(lottoNumbers, bonusNumber))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

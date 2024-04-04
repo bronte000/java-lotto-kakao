@@ -37,7 +37,7 @@ public class LottoTicketsTest {
 
     @Test
     void 로또_당첨_결과를_반환한다() {
-        LottoWinningNumbers lottoWinningNumbers = new LottoWinningNumbers(List.of(
+        WinningLottoTicket winningLottoTicket = new WinningLottoTicket(List.of(
                 new LottoNumber(1),
                 new LottoNumber(2),
                 new LottoNumber(3),
@@ -65,7 +65,9 @@ public class LottoTicketsTest {
                 ))
         ));
 
-        assertThat(lottoTickets.getWinningResult(lottoWinningNumbers))
-                .isEqualTo(new LottoResult(List.of(LottoRank.FIRST, LottoRank.SECOND), new PurchaseAmount(2 * LottoTicket.PRICE)));
+        LottoResult lottoResult = lottoTickets.getWinningResult(winningLottoTicket);
+
+        assertThat(lottoResult.getLottoRanks()).containsExactly(LottoRank.FIRST, LottoRank.SECOND);
+        assertThat(lottoResult.getPurchaseAmount()).isEqualTo(new PurchaseAmount(2 * LottoTicket.PRICE));
     }
 }

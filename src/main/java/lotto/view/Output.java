@@ -14,6 +14,9 @@ public class Output {
         System.out.println(purchaseCount + "개를 구매했습니다.");
     }
 
+    private Output() {
+    }
+
     public static void printLottoTickets(List<LottoTicketDto> lottoTickets) {
         lottoTickets.forEach(Output::printLottoTicket);
         System.out.println();

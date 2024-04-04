@@ -2,10 +2,11 @@ package lotto.model;
 
 import java.util.Objects;
 
-public class LottoNumber {
+public class LottoNumber implements Comparable<LottoNumber> {
 
     public static final int LOWER_BOUND = 1;
     public static final int UPPER_BOUND = 45;
+
     private final int number;
 
     public LottoNumber(int number) {
@@ -21,6 +22,11 @@ public class LottoNumber {
 
     public int getNumber() {
         return number;
+    }
+
+    @Override
+    public int compareTo(LottoNumber lottoNumber) {
+        return this.number - lottoNumber.number;
     }
 
     @Override

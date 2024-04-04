@@ -1,49 +1,30 @@
 package lotto.model;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class LottoTicket {
 
     public static final Long PRICE = 1_000L;
     public static final int SIZE = 6;
-    private final List<LottoNumber> lottoNumbers;
+
+    private final SortedSet<LottoNumber> lottoNumbers;
 
     public LottoTicket(List<LottoNumber> lottoNumbers) {
-        validate(lottoNumbers);
-        this.lottoNumbers = lottoNumbers.stream()
-                .sorted(Comparator.comparing(LottoNumber::getNumber))
-                .collect(Collectors.toList());
+        this.lottoNumbers = new TreeSet<>(lottoNumbers);
+        validateLottoNumbers();
     }
 
-    private void validate(List<LottoNumber> lottoNumbers) {
-        validateSize(lottoNumbers);
-        validateDuplication(lottoNumbers);
-    }
-
-    private void validateDuplication(List<LottoNumber> lottoNumbers) {
-        if (lottoNumbers.stream().distinct().count() != SIZE) {
-            throw new IllegalArgumentException("로또 번호는 중복될 수 없습니다.");
+    private void validateLottoNumbers() {
+        if (lottoNumbers.size() != SIZE) {
+            throw new IllegalArgumentException("로또 번호는 중복 없는 6개의 숫자로 이루어져야 합니다.");
         }
     }
 
-    private void validateSize(List<LottoNumber> lottoNumbers) {
-        if (lottoNumbers.size() != 6) {
-            throw new IllegalArgumentException("로또 번호는 6개만 가능합니다.");
-        }
+    public boolean contains(LottoNumber lottoNumber) {
+        return lottoNumbers.contains(lottoNumber);
     }
 
-    public List<LottoNumber> getLottoNumbers() {
-        return this.lottoNumbers.stream()
-                .collect(Collectors.toUnmodifiableList());
-    }
-
-    public LottoRank match(LottoWinningNumbers winningNumbers) {
-        int matchCount = (int) lottoNumbers.stream()
-                .filter(winningNumbers::contains)
-                .count();
-        boolean bonusMatch = lottoNumbers.stream().anyMatch(winningNumbers::matchBonus);
-        return LottoRank.valueOf(matchCount, bonusMatch);
+    public Set<LottoNumber> getLottoNumbers() {
+        return Collections.unmodifiableSet(lottoNumbers);
     }
 }

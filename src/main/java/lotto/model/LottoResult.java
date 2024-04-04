@@ -1,9 +1,11 @@
 package lotto.model;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
+import java.util.Map;
 
 public class LottoResult {
+
     private final List<LottoRank> lottoRanks;
     private final PurchaseAmount totalPurchaseAmount;
 
@@ -22,20 +24,23 @@ public class LottoResult {
         return (float) calculateTotalPrize() / totalPurchaseAmount.getPurchaseAmount();
     }
 
+    public Map<LottoRank, Integer> makeLottoResultMap() {
+        Map<LottoRank, Integer> lottoResultMap = new HashMap<>();
+        for (LottoRank lottoRank : LottoRank.values()) {
+            lottoResultMap.put(lottoRank, 0);
+        }
+        for (LottoRank lottoRank : lottoRanks) {
+            lottoResultMap.put(lottoRank, lottoResultMap.get(lottoRank) + 1);
+        }
+        lottoResultMap.remove(LottoRank.NONE);
+        return lottoResultMap;
+    }
+
     public List<LottoRank> getLottoRanks() {
         return lottoRanks;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        LottoResult that = (LottoResult) o;
-        return Objects.equals(lottoRanks, that.lottoRanks) && Objects.equals(totalPurchaseAmount, that.totalPurchaseAmount);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(lottoRanks, totalPurchaseAmount);
+    public PurchaseAmount getPurchaseAmount() {
+        return totalPurchaseAmount;
     }
 }
