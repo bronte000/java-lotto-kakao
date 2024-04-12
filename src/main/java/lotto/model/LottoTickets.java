@@ -29,11 +29,8 @@ public class LottoTickets {
         return Collections.unmodifiableList(lottoTickets);
     }
 
-    public void add(List<LottoTicket> additionalLottoTickets) {
-        lottoTickets.addAll(additionalLottoTickets);
-    }
-
-    public void add(LottoTickets additionalLottoTickets) {
+    public LottoTickets add(LottoTickets additionalLottoTickets) {
         lottoTickets.addAll(additionalLottoTickets.getLottoTickets());
+        return this;
     }
 }

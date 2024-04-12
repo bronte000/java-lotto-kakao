@@ -2,7 +2,7 @@ package lotto;
 
 import lotto.model.LottoRank;
 import lotto.model.LottoResult;
-import lotto.model.PurchaseAmount;
+import lotto.model.LottoPurchaseAmount;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -34,7 +34,7 @@ public class LottoResultTest {
                 LottoRank.SECOND
         );
         LottoResult result = new LottoResult(ranks);
-        assertThat(result.calculateReturnRate(new PurchaseAmount(10_000))).isEqualTo(403_000);
+        assertThat(result.calculateReturnRate(new LottoPurchaseAmount(10_000))).isEqualTo(403_000);
     }
 
     @Test

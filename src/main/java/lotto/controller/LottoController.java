@@ -13,11 +13,10 @@ import java.util.stream.Collectors;
 public class LottoController {
 
     public static void play() {
-        PurchaseAmount purchaseAmount = new PurchaseAmount(Input.getPurchaseAmount());
-        validatePurchaseAmount(purchaseAmount);
+        LottoPurchaseAmount lottoPurchaseAmount = new LottoPurchaseAmount(Input.getPurchaseAmount());
         int manualPurchaseCount = Input.getManualPurchaseCount();
-        validateMnaualPurchaseCount(purchaseAmount, manualPurchaseCount);
-        LottoTickets lottoTickets = buyLottoTickets(purchaseAmount, manualPurchaseCount);
+        validateManualPurchaseCount(lottoPurchaseAmount, manualPurchaseCount);
+        LottoTickets lottoTickets = buyLottoTickets(lottoPurchaseAmount, manualPurchaseCount);
 
         Output.printPurchaseCount(manualPurchaseCount, lottoTickets.getSize() - manualPurchaseCount);
         Output.printLottoTickets(parseDto(lottoTickets));
@@ -27,17 +26,11 @@ public class LottoController {
         WinningLottoTicket winningLottoTicket = new WinningLottoTicket(winningTicket, bonusNumber);
 
         LottoResult lottoResult = lottoTickets.makeWinningResult(winningLottoTicket);
-        Output.printResult(new LottoResultDto(lottoResult.calculateReturnRate(purchaseAmount), lottoResult.makeLottoResultMap()));
+        Output.printResult(new LottoResultDto(lottoResult.calculateReturnRate(lottoPurchaseAmount), lottoResult.makeLottoResultMap()));
     }
 
-    private static void validatePurchaseAmount(PurchaseAmount purchaseAmount) {
-        if (purchaseAmount.getPurchaseAmount() < LottoTicket.PRICE) {
-            throw new IllegalArgumentException("구매 금액은 최소 1,000원 이상이어야 합니다.");
-        }
-    }
-
-    private static void validateMnaualPurchaseCount(PurchaseAmount purchaseAmount, int manualPurchaseCount) {
-        if (purchaseAmount.getPurchaseAmount() < (long) manualPurchaseCount * LottoTicket.PRICE) {
+    private static void validateManualPurchaseCount(LottoPurchaseAmount lottoPurchaseAmount, int manualPurchaseCount) {
+        if (lottoPurchaseAmount.getPurchaseAmount() < (long) manualPurchaseCount * LottoTicket.PRICE) {
             throw new IllegalArgumentException("수동으로 구매할 로또 수가 구매 금액보다 많습니다.");
         }
     }
@@ -56,14 +49,14 @@ public class LottoController {
                 .collect(Collectors.toList());
     }
 
-    public static LottoTickets buyLottoTickets(PurchaseAmount purchaseAmount, int manualCount) {
+    private static LottoTickets buyLottoTickets(LottoPurchaseAmount lottoPurchaseAmount, int manualCount) {
         List<LottoTicket> lottoTicketList = Input.getManualLottoTickets(manualCount).stream()
                 .map(LottoController::parseLottoTicket)
                 .collect(Collectors.toList());
+        LottoTickets manualLottoTickets = new LottoTickets(lottoTicketList);
 
-        purchaseAmount.spend((long) manualCount * LottoTicket.PRICE);
-        LottoTickets lottoTickets = new LottoTickets(lottoTicketList);
-        lottoTickets.add(LottoTicketGenerator.generate(purchaseAmount));
-        return lottoTickets;
+        LottoPurchaseAmount leftAmount = lottoPurchaseAmount.spend((long) manualCount * LottoTicket.PRICE);
+        LottoTickets autoLottoTickets = LottoTicketGenerator.generate(leftAmount);
+        return manualLottoTickets.add(autoLottoTickets);
     }
 }

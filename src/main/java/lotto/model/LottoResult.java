@@ -12,8 +12,8 @@ public class LottoResult {
         this.lottoRanks = lottoRanks;
     }
 
-    public float calculateReturnRate(PurchaseAmount totalPurchaseAmount) {
-        return (float) calculateTotalPrize() / totalPurchaseAmount.getPurchaseAmount();
+    public float calculateReturnRate(LottoPurchaseAmount totalLottoPurchaseAmount) {
+        return (float) calculateTotalPrize() / totalLottoPurchaseAmount.getPurchaseAmount();
     }
 
     private long calculateTotalPrize() {
