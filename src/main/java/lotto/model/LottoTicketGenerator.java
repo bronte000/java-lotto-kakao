@@ -31,8 +31,6 @@ public class LottoTicketGenerator {
     private static LottoTicket generate() {
         List<LottoNumber> copiedLottoNumbers = new ArrayList<>(LOTTO_NUMBERS);
         Collections.shuffle(copiedLottoNumbers);
-        return copiedLottoNumbers.stream()
-                .limit(LottoTicket.SIZE)
-                .collect(Collectors.collectingAndThen(Collectors.toList(), LottoTicket::new));
+        return new LottoTicket(copiedLottoNumbers.subList(0, 6));
     }
 }

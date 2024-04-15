@@ -31,6 +31,6 @@ public class LottoTickets {
 
     public LottoTickets add(LottoTickets additionalLottoTickets) {
         lottoTickets.addAll(additionalLottoTickets.getLottoTickets());
-        return this;
+        return new LottoTickets(lottoTickets);
     }
 }

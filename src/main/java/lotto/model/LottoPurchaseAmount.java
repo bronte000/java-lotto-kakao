@@ -3,7 +3,7 @@ package lotto.model;
 import java.util.Objects;
 
 public class LottoPurchaseAmount {
-    private long amount;
+    private final long amount;
 
     public LottoPurchaseAmount(long amount) {
         validate(amount);
